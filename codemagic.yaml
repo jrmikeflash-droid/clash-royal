@@ -1,0 +1,18 @@
+workflows:
+  ios-workflow:
+    name: iOS Build
+    max_build_duration: 60
+    environment:
+      vars:
+        XCODE_PROJECT: "TowerBattle.xcodeproj"
+        SCHEME: "TowerBattle"
+    scripts:
+      - name: Build IPA
+        script: |
+          xcodebuild clean archive -project $XCODE_PROJECT -scheme $SCHEME -configuration Release -archivePath $CM_BUILD_DIR/TowerBattle.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          cd $CM_BUILD_DIR
+          mkdir -p Payload
+          cp -r TowerBattle.xcarchive/Products/Applications/*.app Payload/
+          zip -r TowerBattle.ipa Payload
+    artifacts:
+      - path: "$CM_BUILD_DIR/TowerBattle.ipa"
