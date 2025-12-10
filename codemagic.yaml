@@ -7,11 +7,6 @@ workflows:
         XCODE_PROJECT: "TowerBattle.xcodeproj"
         SCHEME: "TowerBattle"
     scripts:
-      - name: Git commands (optional)
-        script: |
-          git add codemagic.yaml
-          git commit -m "Update Codemagic configuration"
-          git push origin main
       - name: Build IPA
         script: |
           xcodebuild clean archive -project "$XCODE_PROJECT" -scheme "$SCHEME" -configuration Release -archivePath "$CM_BUILD_DIR/TowerBattle.xcarchive" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
